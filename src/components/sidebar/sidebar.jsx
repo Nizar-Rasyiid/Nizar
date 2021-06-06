@@ -23,7 +23,7 @@ return(
     <div className="mt-5 bg-gray-100 rounded-lg w-50 px-3 mr-3 h-1/10 flex justify-around items-center">
 
         <ul>
-            <div className="">
+            <div className="mb-5">
             {data.map((dt,i)=>(
                             dt.Jumlah*dt.Total === 0 ? "" :<li key={i} className="flex items-center justify-between w-full h-24 relative">  
                             <img className="rounded-xl w-2/12 h-8 " src={dt.Image} alt={dt.Image} />
@@ -40,11 +40,14 @@ return(
                         ))}
             </div>
         </ul>
+        </div>
 
-    <img src={Car} className="h-2/5 bg-gray-300 rounded-lg py-2 px-3" alt={Car} />
+<div className="mt-5 flex justify-around items-center ">
+<img src={Car} className="h-7 bg-gray-300 rounded-lg py-2 px-3" alt={Car} />
     <p className='font-bold text-sm'>Cilincing,Jakarta</p>
     <p className="text-xs text-gray-400">free</p>
-    </div>
+ 
+</div>
     <div className="mt-5 bg-gray-100 rounded-lg w-50 px-3 mr-3 h-1/10 flex justify-between items-center">
     <p className='text-xs font-semibold'>Total
     

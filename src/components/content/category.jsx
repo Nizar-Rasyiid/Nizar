@@ -16,6 +16,8 @@ export default function Category(props) {
         setTotal(totals)
         setNama(namas)
     }
+    props.getSemua(img,jumlah,total,nama)
+
     const[jumlahStok,setJumlahStok] = React.useState(0);
 
     const incrementNumber = () => {
@@ -72,8 +74,8 @@ export default function Category(props) {
     if (id==1) {
         return(
             <React.Fragment>
-            <div className="flex justify-start items-center mt-20">
-                <h1 className="font-bold text-2xl ">Masakan</h1>
+                     <div className="flex justify-start items-center mt-20">
+                <h1 className="font-bold text-2xl ">Populer</h1>
             </div>  
          <div className="mt-0">
             <ul className="flex items-center justify-between w-full flex-wrap ">
@@ -116,12 +118,24 @@ export default function Category(props) {
                                                        </div>
                                                 <div className="flex justify-between mt-3 p-3">
                                                        <div className="mt-5 flex font-bold p-1">
-                                                        <button className="px-3 font-bold" onClick={incrementNumber} disabled={jumlahStok == pop.jumlah}>+</button>
+                                                        <button className="px-3 font-bold" onClick={()=>{
+                                                       pop.jumlah--
+                                                       setJumlahStok(pop.pesan++)
+                                                   }} disabled={jumlahStok == pop.jumlah}>+</button>
                                                         <p className="px-3">{jumlahStok}</p>
-                                                        <button className="px-3 font-bold" onClick={decrementNumber} disabled={jumlahStok == 0}>-</button>
+
+                                                        <button className="px-3 font-bold" disabled={pop.pesan === 0} onClick={()=>{
+                                                        setJumlahStok(pop.pesan--)
+                                                        pop.jumlah++
+                                                   }}>-</button>
                                                        </div>
                                                    <div className="">
-                                                       <button className="bg-yellow-300  flex px-1 rounded-md py-4 font-bold"><img src={Keranjang} alt={Keranjang} className='h-5 mr-3'/> Tambah Pesanan</button>
+                                                       <button onClick={()=>{
+                                                       setImg(pop.image)
+                                                       setJumlah(pop.harga)
+                                                       setTotal(pop.pesan)
+                                                       setNama(pop.name)
+                                                   }} className="bg-yellow-300  flex px-1 rounded-md py-4 font-bold"><img src={Keranjang} alt={Keranjang} className='h-5 mr-3'/> Tambah Pesanan</button>
                                                        </div>
                                                 </div>
                                                 
@@ -137,148 +151,171 @@ export default function Category(props) {
                  ))}
             </ul>
          </div>
-            </React.Fragment>
+        </React.Fragment>
         )
     }    if (id == 2) {
         return(
-                        <React.Fragment>
+            <React.Fragment>
             <div className="flex justify-start items-center mt-20">
-                <h1 className="font-bold text-2xl ">Pizza</h1>
-            </div>  
-         <div className="mt-0">
-            <ul className="flex items-center justify-between w-full flex-wrap ">
-                {pizza.map((pop,index) => (
-                    // ${pop.length === 3 ? 'w-1/4' : 'w-2/10'}
-                    <li key={index} className={`flex-none items-center w-1/4 h-48 relative m-5`}>
+       <h1 className="font-bold text-2xl ">Pizza Series</h1>
+   </div>  
+<div className="mt-0">
+   <ul className="flex items-center justify-between w-full flex-wrap ">
+       {pizza.map((pop,index) => (
+           // ${pop.length === 3 ? 'w-1/4' : 'w-2/10'}
+           <li key={index} className={`flex-none items-center w-1/4 h-48 relative m-5`}>
 <Popup trigger={
-                                    <div className="w-3/10 h-30 my-5">
-                                    <img className="rounded-xl w-full h-36" src={pop.image} alt={pop.image} />
-                                    <div  className="absolute rounded-xl z-10 pl-3  flex items-center justify-start top-24 bottom-0 left-0 right-0 text-white font-black ">
-                                        <p style={{background: "white"}} className="text-black font-extrabold rounded-md text-xs p-1">{pop.waktu}  </p>
-                                    </div>
-                                    <p className="font-bold mt-2">{pop.name}</p>
-                                    <div className="flex">
-                                                <div className="flex"><img className="w-4 h-4 m-1" src={Star} alt={Star} /><p className="font-bold">{pop.rating}</p></div>
-                                                <p className="font-bold px-20">Rp.{pop.harga}</p>
-                                            </div>
-                                    </div>
-                                        } modal>
-                                        {close => (
-                                            <div style={{width:'500px'}}className="bg-white p-4 shadow-lg w-full rounded-2xl font-poppins">
-                                                <img src={pop.image} className="rounded-xl w-full h-40" alt={pop.image} />
-                                                <div className="flex justify-between mt-3 p-3">
-                                                    <p className="font-extrabold text-2xl">{pop.name}</p>
-                                                    <p className="font-extrabold text-2xl">Rp. {pop.harga}</p>
-                                                </div>
-                                                <div className="flex">
-                                                    <div className="rounded-full ml-3 font-extrabold border-black">
-                                                        <p>{pop.waktu}</p>
-                                                    </div>
-                                                    <div className="rounded-full ml-5 flex border-black">
-                                                        <img src={Star} alt={Star} className="h-5 font-bold mr-2"/>
-                                                        <p className="font-bold">{pop.rating}</p>
+                           <div className="w-3/10 h-30 my-5">
+                           <img className="rounded-xl w-full h-36" src={pop.image} alt={pop.image} />
+                           <div  className="absolute rounded-xl z-10 pl-3  flex items-center justify-start top-24 bottom-0 left-0 right-0 text-white font-black ">
+                               <p style={{background: "white"}} className="text-black font-extrabold rounded-md text-xs p-1">{pop.waktu}  </p>
+                           </div>
+                           <p className="font-bold mt-2">{pop.name}</p>
+                           <div className="flex">
+                                       <div className="flex"><img className="w-4 h-4 m-1" src={Star} alt={Star} /><p className="font-bold">{pop.rating}</p></div>
+                                       <p className="font-bold px-20">Rp.{pop.harga}</p>
+                                   </div>
+                           </div>
+                               } modal>
+                               {close => (
+                                   <div style={{width:'500px'}}className="bg-white p-4 shadow-lg w-full rounded-2xl font-poppins">
+                                       <img src={pop.image} className="rounded-xl w-full h-40" alt={pop.image} />
+                                       <div className="flex justify-between mt-3 p-3">
+                                           <p className="font-extrabold text-2xl">{pop.name}</p>
+                                           <p className="font-extrabold text-2xl">Rp. {pop.harga}</p>
+                                       </div>
+                                       <div className="flex">
+                                           <div className="rounded-full ml-3 font-extrabold border-black">
+                                               <p>{pop.waktu}</p>
+                                           </div>
+                                           <div className="rounded-full ml-5 flex border-black">
+                                               <img src={Star} alt={Star} className="h-5 font-bold mr-2"/>
+                                               <p className="font-bold">{pop.rating}</p>
 
-                                                        <img src={Heart} alt={Heart} className="h-5 font-bold ml-5"/>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-5">
-                                                       <p className="font-bold">Stok {pop.jumlah}</p>
-                                                       </div>
-                                                <div className="flex justify-between mt-3 p-3">
-                                                       <div className="mt-5 flex font-bold p-1">
-                                                        <button className="px-3 font-bold" onClick={incrementNumber} disabled={jumlahStok == pop.jumlah}>+</button>
-                                                        <p className="px-3">{jumlahStok}</p>
-                                                        <button className="px-3 font-bold" onClick={decrementNumber} disabled={jumlahStok == 0}>-</button>
-                                                       </div>
-                                                   <div className="">
-                                                       <button className="bg-yellow-300  flex px-1 rounded-md py-4 font-bold"><img src={Keranjang} alt={Keranjang} className='h-5 mr-3'/> Tambah Pesanan</button>
-                                                       </div>
-                                                </div>
-                                                
-                                                {/* <a className="close" onClick={close}>
-                                                &times;
-                                                </a> */}
-                                            </div>
-                                            )}
-                                        </Popup>
-                        
-                    </li>
-                                      
-                 ))}
-            </ul>
-         </div>
-            </React.Fragment>
+                                               <img src={Heart} alt={Heart} className="h-5 font-bold ml-5"/>
+                                           </div>
+                                       </div>
+                                       <div className="mt-5">
+                                              <p className="font-bold">Stok {pop.jumlah}</p>
+                                              </div>
+                                       <div className="flex justify-between mt-3 p-3">
+                                              <div className="mt-5 flex font-bold p-1">
+                                               <button className="px-3 font-bold" onClick={()=>{
+                                              pop.jumlah--
+                                              setJumlahStok(pop.pesan++)
+                                          }} disabled={jumlahStok == pop.jumlah}>+</button>
+                                               <p className="px-3">{jumlahStok}</p>
+
+                                               <button className="px-3 font-bold" disabled={pop.pesan === 0} onClick={()=>{
+                                               setJumlahStok(pop.pesan--)
+                                               pop.jumlah++
+                                          }}>-</button>
+                                              </div>
+                                          <div className="">
+                                              <button onClick={()=>{
+                                              setImg(pop.image)
+                                              setJumlah(pop.harga)
+                                              setTotal(pop.pesan)
+                                              setNama(pop.name)
+                                          }} className="bg-yellow-300  flex px-1 rounded-md py-4 font-bold"><img src={Keranjang} alt={Keranjang} className='h-5 mr-3'/> Tambah Pesanan</button>
+                                              </div>
+                                       </div>
+                                       
+                                       {/* <a className="close" onClick={close}>
+                                       &times;
+                                       </a> */}
+                                   </div>
+                                   )}
+                               </Popup>
+               
+           </li>
+                             
+        ))}
+   </ul>
+</div>
+</React.Fragment>
         )
     }else{
         return(
             <React.Fragment>
             <div className="flex justify-start items-center mt-20">
-                <h1 className="font-bold text-2xl ">Jus</h1>
-            </div>  
-         <div className="mt-0">
-            <ul className="flex items-center justify-between w-full flex-wrap ">
-                {minuman.map((pop,index) => (
-                    // ${pop.length === 3 ? 'w-1/4' : 'w-2/10'}
-                    <li key={index} className={`flex-none items-center w-1/4 h-48 relative m-5`}>
+       <h1 className="font-bold text-2xl ">Jus</h1>
+   </div>  
+<div className="mt-0">
+   <ul className="flex items-center justify-between w-full flex-wrap ">
+       {minuman.map((pop,index) => (
+           // ${pop.length === 3 ? 'w-1/4' : 'w-2/10'}
+           <li key={index} className={`flex-none items-center w-1/4 h-48 relative m-5`}>
 <Popup trigger={
-                                    <div className="w-3/10 h-30 my-5">
-                                    <img className="rounded-xl w-full h-36" src={pop.image} alt={pop.image} />
-                                    <div  className="absolute rounded-xl z-10 pl-3  flex items-center justify-start top-24 bottom-0 left-0 right-0 text-white font-black ">
-                                        <p style={{background: "white"}} className="text-black font-extrabold rounded-md text-xs p-1">{pop.waktu}  </p>
-                                    </div>
-                                    <p className="font-bold mt-2">{pop.name}</p>
-                                    <div className="flex">
-                                                <div className="flex"><img className="w-4 h-4 m-1" src={Star} alt={Star} /><p className="font-bold">{pop.rating}</p></div>
-                                                <p className="font-bold px-20">Rp.{pop.harga}</p>
-                                            </div>
-                                    </div>
-                                        } modal>
-                                        {close => (
-                                            <div style={{width:'500px'}}className="bg-white p-4 shadow-lg w-full rounded-2xl font-poppins">
-                                                <img src={pop.image} className="rounded-xl w-full h-40" alt={pop.image} />
-                                                <div className="flex justify-between mt-3 p-3">
-                                                    <p className="font-extrabold text-2xl">{pop.name}</p>
-                                                    <p className="font-extrabold text-2xl">Rp. {pop.harga}</p>
-                                                </div>
-                                                <div className="flex">
-                                                    <div className="rounded-full ml-3 font-extrabold border-black">
-                                                        <p>{pop.waktu}</p>
-                                                    </div>
-                                                    <div className="rounded-full ml-5 flex border-black">
-                                                        <img src={Star} alt={Star} className="h-5 font-bold mr-2"/>
-                                                        <p className="font-bold">{pop.rating}</p>
+                           <div className="w-3/10 h-30 my-5">
+                           <img className="rounded-xl w-full h-36" src={pop.image} alt={pop.image} />
+                           <div  className="absolute rounded-xl z-10 pl-3  flex items-center justify-start top-24 bottom-0 left-0 right-0 text-white font-black ">
+                               <p style={{background: "white"}} className="text-black font-extrabold rounded-md text-xs p-1">{pop.waktu}  </p>
+                           </div>
+                           <p className="font-bold mt-2">{pop.name}</p>
+                           <div className="flex">
+                                       <div className="flex"><img className="w-4 h-4 m-1" src={Star} alt={Star} /><p className="font-bold">{pop.rating}</p></div>
+                                       <p className="font-bold px-20">Rp.{pop.harga}</p>
+                                   </div>
+                           </div>
+                               } modal>
+                               {close => (
+                                   <div style={{width:'500px'}}className="bg-white p-4 shadow-lg w-full rounded-2xl font-poppins">
+                                       <img src={pop.image} className="rounded-xl w-full h-40" alt={pop.image} />
+                                       <div className="flex justify-between mt-3 p-3">
+                                           <p className="font-extrabold text-2xl">{pop.name}</p>
+                                           <p className="font-extrabold text-2xl">Rp. {pop.harga}</p>
+                                       </div>
+                                       <div className="flex">
+                                           <div className="rounded-full ml-3 font-extrabold border-black">
+                                               <p>{pop.waktu}</p>
+                                           </div>
+                                           <div className="rounded-full ml-5 flex border-black">
+                                               <img src={Star} alt={Star} className="h-5 font-bold mr-2"/>
+                                               <p className="font-bold">{pop.rating}</p>
 
+                                               <img src={Heart} alt={Heart} className="h-5 font-bold ml-5"/>
+                                           </div>
+                                       </div>
+                                       <div className="mt-5">
+                                              <p className="font-bold">Stok {pop.jumlah}</p>
+                                              </div>
+                                       <div className="flex justify-between mt-3 p-3">
+                                              <div className="mt-5 flex font-bold p-1">
+                                               <button className="px-3 font-bold" onClick={()=>{
+                                              pop.jumlah--
+                                              setJumlahStok(pop.pesan++)
+                                          }} disabled={jumlahStok == pop.jumlah}>+</button>
+                                               <p className="px-3">{jumlahStok}</p>
 
-                                                        <img src={Heart} alt={Heart} className="h-5 font-bold ml-5"/>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-5">
-                                                       <p className="font-bold">Stok {pop.jumlah}</p>
-                                                       </div>
-                                                <div className="flex justify-between mt-3 p-3">
-                                                       <div className="mt-5 flex font-bold p-1">
-                                                        <button className="px-3 font-bold" onClick={incrementNumber} disabled={jumlahStok == pop.jumlah}>+</button>
-                                                        <p className="px-3">{jumlahStok}</p>
-                                                        <button className="px-3 font-bold" onClick={decrementNumber} disabled={jumlahStok == 0}>-</button>
-                                                       </div>
-                                                   <div className="">
-                                                       <button className="bg-yellow-300  flex px-1 rounded-md py-4 font-bold"><img src={Keranjang} alt={Keranjang} className='h-5 mr-3'/> Tambah Pesanan</button>
-                                                       </div>
-                                                </div>
-                                                
-                                                {/* <a className="close" onClick={close}>
-                                                &times;
-                                                </a> */}
-                                            </div>
-                                            )}
-                                        </Popup>
-                        
-                    </li>
-                                      
-                 ))}
-            </ul>
-         </div>
-            </React.Fragment>
+                                               <button className="px-3 font-bold" disabled={pop.pesan === 0} onClick={()=>{
+                                               setJumlahStok(pop.pesan--)
+                                               pop.jumlah++
+                                          }}>-</button>
+                                              </div>
+                                          <div className="">
+                                              <button onClick={()=>{
+                                              setImg(pop.image)
+                                              setJumlah(pop.harga)
+                                              setTotal(pop.pesan)
+                                              setNama(pop.name)
+                                          }} className="bg-yellow-300  flex px-1 rounded-md py-4 font-bold"><img src={Keranjang} alt={Keranjang} className='h-5 mr-3'/> Tambah Pesanan</button>
+                                              </div>
+                                       </div>
+                                       
+                                       {/* <a className="close" onClick={close}>
+                                       &times;
+                                       </a> */}
+                                   </div>
+                                   )}
+                               </Popup>
+               
+           </li>
+                             
+        ))}
+   </ul>
+</div>
+</React.Fragment>
         )
     }
 

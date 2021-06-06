@@ -16,7 +16,9 @@ export default function Content (props){
         setJumlah(jumlahs)
         setTotal(totals)
         setNama(namas)
+        
     }
+    props.getSemua(img,jumlah,total,nama)
     return(
         <React.Fragment>
             <header className="h-2/10 w-full pr-5">
